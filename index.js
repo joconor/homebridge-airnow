@@ -251,11 +251,11 @@ AirNowAccessory.prototype = {
 		if (!aqi) {
 			return(0); // Error or unknown response
 		} else if (aqi <= 50) {
-			return(1); // Return EXCELLENT
-		} else if (aqi >= 51 && aqi <= 100) {
 			return(2); // Return GOOD
-		} else if (aqi >= 101 && aqi <= 150) {
+		} else if (aqi >= 51 && aqi <= 100) {
 			return(3); // Return FAIR
+		} else if (aqi >= 101 && aqi <= 150) {
+			return(4); // Return INFERIOR
 		} else if (aqi >= 151 && aqi <= 200) {
 			return(4); // Return INFERIOR
 		} else if (aqi >= 201) {
