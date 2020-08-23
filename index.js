@@ -248,18 +248,32 @@ AirNowAccessory.prototype = {
 	},
 
     trans_aqi: function (aqi) {
+		/* 
+		Map EPA AQI Categories to HomeKit AQI Categories as follows:
+			+----------------------------------+------------------------+
+		  |	 EPA Category                    |  HomeKit Category      |
+			+----------------------------------+------------------------+
+			|  ----                            |  Excellent (Don't use) |
+			|  Good                            |  Good                  |
+			|  Moderate                        |  Fair                  |
+			|  Unhealthy for Sensitive Groups  |  Inferior              |
+			|  Unhealthy                       |  Inferior              |
+			|  Very Unhealthy                  |  Poor                  |
+			|  Hazardous                       |  Poor                  |
+			+----------------------------------+------------------------+
+		*/
 		if (!aqi) {
 			return(0); // Error or unknown response
 		} else if (aqi <= 50) {
-			return(2); // Return GOOD
+			return(2); // Return HK GOOD for EPA "Good" (Don't use HomeKit EXCELLENT category)
 		} else if (aqi >= 51 && aqi <= 100) {
-			return(3); // Return FAIR
+			return(3); // Return HK FAIR for EPA "Moderate"
 		} else if (aqi >= 101 && aqi <= 150) {
-			return(4); // Return INFERIOR
+			return(4); // Return HK INFERIOR for EPA "Unhealthy for Senstive Groups"
 		} else if (aqi >= 151 && aqi <= 200) {
-			return(4); // Return INFERIOR
+			return(4); // Return HK INFERIOR for EPA "Unhealthy"
 		} else if (aqi >= 201) {
-			return(5); // Return POOR (Homekit only goes to cat 5, so combined the last two AQI cats of Very Unhealty and Hazardous.
+			return(5); // Return HK POOR for EPA "Very Unhealthy" and "Hazardous" (Homekit only goes to cat 5, so combined the last two AQI cats of Very Unhealty and Hazardous.
 		} else {
 			return(0); // Error or unknown response.
 		}
