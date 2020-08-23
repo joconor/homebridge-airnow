@@ -251,7 +251,7 @@ AirNowAccessory.prototype = {
 		/* 
 		Map EPA AQI Categories to HomeKit AQI Categories as follows:
 			+----------------------------------+------------------------+
-		  |	 EPA Category                    |  HomeKit Category      |
+			|  EPA Category                    |  HomeKit Category      |
 			+----------------------------------+------------------------+
 			|  ----                            |  Excellent (Don't use) |
 			|  Good                            |  Good                  |
