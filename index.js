@@ -261,19 +261,20 @@ AirNowAccessory.prototype = {
 			|  Very Unhealthy                  |  Poor                  |
 			|  Hazardous                       |  Poor                  |
 			+----------------------------------+------------------------+
+			Note that Apple Home app will show the sensor 'on' for Inferior and above
 		*/
 		if (!aqi) {
 			return(0); // Error or unknown response
-		} else if (aqi <= 50) {
-			return(2); // Return HK GOOD for EPA "Good" (Don't use HomeKit EXCELLENT category)
-		} else if (aqi >= 51 && aqi <= 100) {
-			return(3); // Return HK FAIR for EPA "Moderate"
-		} else if (aqi >= 101 && aqi <= 150) {
-			return(4); // Return HK INFERIOR for EPA "Unhealthy for Senstive Groups"
-		} else if (aqi >= 151 && aqi <= 200) {
-			return(4); // Return HK INFERIOR for EPA "Unhealthy"
-		} else if (aqi >= 201) {
-			return(5); // Return HK POOR for EPA "Very Unhealthy" and "Hazardous" (Homekit only goes to cat 5, so combined the last two AQI cats of Very Unhealty and Hazardous.
+		} else if (aqi <= 50) {                 // EPA "Good"
+			return(2); // Return HomeKit GOOD (Don't use HomeKit EXCELLENT category)
+		} else if (aqi >= 51 && aqi <= 100) {   // EPA "Moderate"
+			return(3); // Return HomeKit FAIR
+		} else if (aqi >= 101 && aqi <= 150) {  // EPA "Unhealthy for Sensitive Groups"
+			return(4); // Return HomeKit INFERIOR
+		} else if (aqi >= 151 && aqi <= 200) {  // EPA "Unhealthy"
+			return(4); // Return HomeKit INFERIOR
+		} else if (aqi >= 201) {                // EPA "Very Unhealthy" and "Hazardous"
+			return(5); // Return HomeKit POOR (HomeKit only goes to cat 5, so combine the last two EPA AQI categories.
 		} else {
 			return(0); // Error or unknown response.
 		}
